@@ -61,7 +61,6 @@ while price < balance < args.target:
         puts('won')
         n = 0
         waiting = False
-        wins += 1
 
         if args.one:
           sys.exit(0)
@@ -77,7 +76,7 @@ while price < balance < args.target:
         log('%d/%d = %.2f%%' % (sold, total, 100.0 * sold / total))
 
     except RequestException as e:
-      puts(e)
+      log(e)
       sleep(10)
 
   balance = bot.balance()
