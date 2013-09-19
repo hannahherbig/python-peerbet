@@ -110,10 +110,10 @@ class Peerbet(object):
       'instant': 1 if instant else 0
     }
 
-    if password:
+    if password is not None:
       params['password'] = password
 
-    if expire:
+    if expire is not None:
       params['expire'] = expire
 
     return self.request('createraffle', **params)['raffle_id']
@@ -150,5 +150,29 @@ class Peerbet(object):
     else:
       raise RequestException('success is %r' % r['success'])
 
-  # this is where i got bored and just wanted to win some coins. there's more
-  # stuff in the API. feel free to submit a pull request.
+  def transferhistory(self, type=None, count=None, since=None):
+    params = {}
+
+    if type is not None:
+      params['type'] = type
+
+    if count is not None:
+      params['count'] = count
+
+    if since is not None:
+      params['since'] = since
+
+    return self.request('gettransferlist', **params)
+
+  def chat(self, lastmessageid=None):
+    params = {}
+
+    if lastmessageid is not None:
+      params['lastmessageid'] = lastmessageid
+
+    return self.request('getchatmessages', **params)
+
+  def postchat(self, message, bot=True):
+    bot = '1' if bot else '0'
+
+    return self.request('postchatmessage', message=message, bot=bot)
