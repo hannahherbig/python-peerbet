@@ -8,11 +8,11 @@ BASE_URI = 'https://peerbet.org/api.php'
 RATE_LIMITS = {
   'login': 5,
   'signup': 5,
-  'getuserinfo': 0,
-  'getdepositaddress': 0,
+  'getuserinfo': 1,
+  'getdepositaddress': 1,
   'getactiveraffles': 1,
   'getraffleinfo': 1, 
-  'getmyrafflecount': 0,
+  'getmyrafflecount': 1,
   'getmyraffles': 5,
   'createraffle': 1,
   'buytickets': 1,
@@ -40,7 +40,7 @@ def request(method, **params):
   params['method'] = method
 
   try:
-    data = requests.post(BASE_URI, data=params).json()
+    data = requests.post(BASE_URI, data=params, timeout=10).json()
 
     if 'error' not in data:
       return data
